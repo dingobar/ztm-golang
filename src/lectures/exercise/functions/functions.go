@@ -20,5 +20,29 @@ package main
 import "fmt"
 
 func main() {
+	printGreeting("Joe")
+	fmt.Println(greetJoe())
 
+	two, anotherTwo := getTwoTwo()
+	fmt.Println(addThree(two, anotherTwo, getTwo()))
+}
+
+func getTwoTwo() (int, int) {
+	return getTwo(), getTwo()
+}
+
+func getTwo() int {
+	return 2
+}
+
+func addThree(a, b, c int) int {
+	return a + b + c
+}
+
+func greetJoe() string {
+	return "Hi, Joe!"
+}
+
+func printGreeting(name string) {
+	fmt.Printf("Hi there, %s!", name)
 }
