@@ -19,8 +19,60 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
+
+type Book struct {
+	name           string
+	checkedOut     bool
+	lastCheckedOut time.Time
+	lastReturned   time.Time
+}
+
+func checkOutOrReturnBook(book *Book) {
+	now := time.Now().UTC()
+	if book.checkedOut {
+		book.lastReturned = now
+	} else {
+		book.lastCheckedOut = now
+	}
+	book.checkedOut = !book.checkedOut
+}
+
+func printLibrary(books []Book) {
+	var checkedOut string
+	var lastAction string
+	for _, book := range books {
+		if !book.checkedOut {
+			checkedOut = "is not"
+			lastAction = "It was returned at " + book.lastReturned.String() + "."
+		} else {
+			checkedOut = "is"
+			lastAction = "It was last checked out at " + book.lastCheckedOut.String()
+		}
+		fmt.Println("Book", "\""+book.name+"\"", checkedOut, "checked out.", lastAction)
+	}
+	fmt.Println("There are", len(books), "books")
+}
 
 func main() {
+	var books []Book
+	var now = time.Now().UTC()
+	books = append(books, Book{name: "The First Book", checkedOut: false, lastReturned: now, lastCheckedOut: now})
+	books = append(books, Book{name: "The Second Book", checkedOut: false})
+	books = append(books, Book{name: "The Third Book", checkedOut: false})
+	books = append(books, Book{name: "The Fourth Book", checkedOut: false})
+
+	printLibrary(books)
+
+	// Check out a book
+	checkOutOrReturnBook(&books[1])
+	printLibrary(books)
+
+	//Return the book
+	checkOutOrReturnBook(&books[1])
+	printLibrary(books)
 
 }
