@@ -18,6 +18,36 @@ package main
 
 import "fmt"
 
+type Item struct {
+	active bool
+}
+
+func activateTag(item *Item) {
+	item.active = true
+}
+
+func deactivateTag(item *Item) {
+	item.active = false
+}
+
+func checkout(items []Item) {
+	for i := range items {
+		deactivateTag(&items[i])
+	}
+}
+
 func main() {
+	var items []Item
+	for i := 0; i < 5; i++ {
+		items = append(items, Item{active: true})
+	}
+
+	fmt.Println(items)
+
+	deactivateTag(&items[2])
+	fmt.Println(items)
+
+	checkout(items)
+	fmt.Println(items)
 
 }
