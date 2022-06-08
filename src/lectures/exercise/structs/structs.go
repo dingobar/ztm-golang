@@ -17,8 +17,26 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
+
+type Rectangle struct {
+	x1 float64
+	y1 float64
+	x2 float64
+	y2 float64
+}
+
+func rectangleArea(r Rectangle) float64 {
+	return math.Abs((r.x1 - r.x2) * (r.y1 - r.y2))
+}
 
 func main() {
+	rectangle := Rectangle{
+		x1: 1.54, y1: 1, x2: 20.124, y2: 2.123,
+	}
 
+	fmt.Println(rectangleArea(rectangle))
 }
