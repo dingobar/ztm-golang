@@ -11,7 +11,26 @@
 
 package main
 
-import "fmt"
+func lifeStage(age int) string {
+
+	switch {
+	case age == 0:
+		return "newborn"
+	case age >= 1 && age < 4:
+		return "toddler"
+	case age >= 4 && age < 13:
+		return "child"
+	case age >= 13 && age < 18:
+		return "teenager"
+	case age > 18:
+		return "adult"
+	default:
+		return "alien"
+	}
+
+}
 
 func main() {
+	var age int = 10
+	println(lifeStage(age))
 }
