@@ -25,4 +25,15 @@ package main
 import "fmt"
 
 func main() {
+	var color = "blue"
+	year, age := 1978, 65
+	var (
+		first rune = 'K'
+		last  rune = 'S'
+	)
+	var myAge int
+	myAge = 365 * age
+
+	fmt.Printf("Name: %s %s, age %d days, born year %d\n", string(first), string(last), myAge, year)
+	fmt.Printf("Btw my fave color is %s", color)
 }
