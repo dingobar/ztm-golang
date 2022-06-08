@@ -23,7 +23,64 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
+
+func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+}
+
+func rollDie(nDieSides int) int {
+	return rand.Intn(nDieSides) + 1
+}
+
+func rollDice(nDice int, nDieSides int) []int {
+	var rolls []int
+	for i := 0; i < nDice; i++ {
+		rolls = append(rolls, rollDie(nDieSides))
+	}
+	return rolls
+}
+
+func arraySum(num ...int) int {
+	result := 0
+	for _, n := range num {
+		result += n
+	}
+	return result
+}
+
+func arrayDiceRollCharacteristic(num ...int) string {
+	sum := arraySum(num...)
+	switch {
+	case len(num) == 2 && sum == 2:
+		return "Snake Eyes"
+	case sum == 7:
+		return "Lucky Seven"
+	case sum%2 == 0:
+		return "Even"
+	default:
+		return "Odd"
+	}
+}
+
+func describeDiceRoll(num ...int) string {
+	rollPrint := "You rolled: "
+	for _, roll := range num {
+		rollPrint += fmt.Sprintf("[%d]", roll)
+	}
+	rollPrint += fmt.Sprintf("\nRoll sum: %d", arraySum(num...))
+	rollPrint += fmt.Sprintf("\nRoll characteristic: %s", arrayDiceRollCharacteristic(num...))
+	return rollPrint
+}
 
 func main() {
+	nDice := 2      // Number of dice to roll
+	nDiceSides := 6 // Number of sides on each die
+	rolls := rollDice(nDice, nDiceSides)
+
+	fmt.Println(describeDiceRoll(rolls...))
 }
