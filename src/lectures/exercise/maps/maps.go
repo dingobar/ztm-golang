@@ -20,8 +20,6 @@
 
 package main
 
-import "fmt"
-
 const (
 	Online      = 0
 	Offline     = 1
@@ -29,6 +27,32 @@ const (
 	Retired     = 3
 )
 
+func printServerStatus(servers map[string]int) {
+	var statusCounts [4]int
+	for _, status := range servers {
+		statusCounts[status]++
+	}
+
+	println("Number of servers: ", len(servers))
+	println("Online: ", statusCounts[Online])
+	println("Offline: ", statusCounts[Offline])
+	println("Maintenance: ", statusCounts[Maintenance])
+	println("Retired: ", statusCounts[Retired])
+	println("---")
+}
+
 func main() {
 	servers := []string{"darkstar", "aiur", "omicron", "w359", "baseline"}
+	var serverStatus = make(map[string]int)
+	for _, server := range servers {
+		serverStatus[server] = Online
+	}
+	printServerStatus(serverStatus)
+	serverStatus["darkstar"] = Retired
+	serverStatus["aiur"] = Offline
+	printServerStatus(serverStatus)
+	for server := range serverStatus {
+		serverStatus[server] = Offline
+	}
+	printServerStatus(serverStatus)
 }
