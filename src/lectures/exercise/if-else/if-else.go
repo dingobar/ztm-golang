@@ -45,9 +45,26 @@ func accessDenied() {
 	fmt.Println("Denied")
 }
 
+func checkAccess(dayId int, roleId int) bool {
+	if roleId <= 20 {
+		return true
+	} else if roleId == 30 && dayId >= 5 {
+		return true
+	} else if roleId == 40 && dayId <= 4 {
+		return true
+	} else if roleId == 50 && (dayId == 0 || dayId == 2 || dayId == 4) {
+		return true
+	}
+	return false
+}
+
 func main() {
 	// The day and role. Change these to check your work.
-	today, role := Tuesday, Guest
+	today, role := Monday, Guest
 
-	accessGranted()
+	if checkAccess(today, role) {
+		accessGranted()
+	} else {
+		accessDenied()
+	}
 }
