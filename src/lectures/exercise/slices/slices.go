@@ -18,5 +18,21 @@ import "fmt"
 
 type Part string
 
+func printAssemblyLine(assemblyLine []int) {
+	for _, v := range assemblyLine {
+		fmt.Print("[", v, "]")
+	}
+	fmt.Print("\n")
+}
+
 func main() {
+	assemblyLine := []int{1, 2, 3}
+
+	printAssemblyLine(assemblyLine)
+
+	assemblyLine = append(assemblyLine, 4, 5)
+
+	printAssemblyLine(assemblyLine)
+
+	printAssemblyLine(assemblyLine[len(assemblyLine)-2:])
 }
