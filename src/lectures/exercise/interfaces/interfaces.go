@@ -21,6 +21,45 @@ package main
 
 import "fmt"
 
-func main() {
+type VehicleType int
 
+const (
+	Motorcycle VehicleType = iota
+	Car
+	Truck
+)
+
+func (vt VehicleType) String() string {
+	switch vt {
+	case Motorcycle:
+		return "motorcycle"
+	case Car:
+		return "car"
+	case Truck:
+		return "truck"
+	default:
+		return "unknown vehicle type"
+	}
+}
+
+type Liftable interface {
+	Lift()
+}
+
+type Vehicle struct {
+	Type  VehicleType
+	Model string
+}
+
+func (v *Vehicle) Lift() {
+	fmt.Println("A", v.Type, "of model", v.Model, "was lifted!")
+}
+
+func main() {
+	car := Vehicle{Car, "Ford Mondeo"}
+	motorcycle := Vehicle{Motorcycle, "Kawazaki"}
+	truck := Vehicle{Truck, "Ford F-150"}
+	car.Lift()
+	motorcycle.Lift()
+	truck.Lift()
 }
