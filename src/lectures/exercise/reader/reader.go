@@ -18,8 +18,43 @@
 
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
+	scanner := bufio.NewScanner(os.Stdin)
 
+	var nLines, nCommands int
+
+	for scanner.Scan() {
+		val := scanner.Text()
+		if val == "" {
+			continue
+		}
+		val = strings.TrimSpace(val)
+		if strings.ToLower(val) == "q" {
+			fmt.Println(
+				"Exiting, thanks for playing. You entered",
+				nLines,
+				"lines and executed",
+				nCommands,
+				"commands.")
+			break
+		}
+
+		nLines++
+		if val == "hello" {
+			fmt.Println("And hello to you, young traveller")
+			nCommands++
+		} else if val == "bye" {
+			fmt.Println("Farewell, and godspeed")
+			nCommands++
+		}
+
+		fmt.Println("You entered: ", "\""+strings.ToLower(val)+"\"")
+	}
 }
