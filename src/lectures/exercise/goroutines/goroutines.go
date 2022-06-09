@@ -28,7 +28,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
 	"strconv"
 	"time"
@@ -36,4 +35,27 @@ import (
 
 func main() {
 	files := []string{"num1.txt", "num2.txt", "num3.txt", "num4.txt", "num5.txt"}
+	var sum int
+	openAndSum := func(filename string) {
+		f, err := os.Open(filename)
+		defer f.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+		scanner := bufio.NewScanner(f)
+		for scanner.Scan() {
+			val, err := strconv.Atoi(scanner.Text())
+			if err != nil {
+				fmt.Println(err)
+			}
+			sum += val
+		}
+	}
+
+	for _, file := range files {
+		go openAndSum(file)
+	}
+
+	time.Sleep(1000 * time.Millisecond)
+	fmt.Println(sum)
 }
