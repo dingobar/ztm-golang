@@ -19,7 +19,42 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"strings"
+	"sync"
+	"unicode/utf8"
 )
 
-func main() {}
+func checkTerminateCommand(cmd string) bool {
+	if strings.ToLower(strings.TrimSpace(cmd)) == "q" {
+		return true
+	}
+	return false
+}
+
+func countLetters(word string, wg *sync.WaitGroup, out *int) {
+	fmt.Println("Started to count word", word)
+	defer wg.Done()
+	*out += utf8.RuneCountInString(word)
+}
+
+func main() {
+	var wg sync.WaitGroup
+	scanner := bufio.NewScanner(os.Stdin)
+	counter := 0
+	for scanner.Scan() {
+		input := scanner.Text()
+		if checkTerminateCommand(input) {
+			break
+		}
+		for _, word := range strings.Split(input, " ") {
+			wg.Add(1)
+			go countLetters(word, &wg, &counter)
+		}
+		wg.Wait()
+	}
+	fmt.Println("N letters total: ", counter)
+	fmt.Println("THanks for playing.")
+}
